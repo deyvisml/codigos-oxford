@@ -1,66 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Guía de Instalación y Despliegue
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este documento explica cómo levantar el proyecto en un entorno local y
+cómo desplegarlo en un hosting compartido (HostGator).
 
-## About Laravel
+------------------------------------------------------------------------
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### EJECUTAR EL PROYECTO EN LOCALHOST
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para ejecutar el proyecto en tu entorno local necesitas tener instalados
+los siguientes requisitos:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Requisitos: - PHP - MySQL - Node.js - NPM - Un servidor local como XAMPP
+o WAMP
 
-## Learning Laravel
+Pasos:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1.  Clonar el repositorio o descargar el proyecto.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2.  Instalar las dependencias de Node: npm install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3.  Compilar los assets del frontend: npm run dev
 
-## Laravel Sponsors
+4.  En otra consola iniciar el servidor de Laravel: php artisan serve
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+5.  Abrir el navegador y acceder a: http://127.0.0.1:8000
 
-### Premium Partners
+------------------------------------------------------------------------
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### DESPLIEGUE EN HOSTGATOR
 
-## Contributing
+Para subir el proyecto a un hosting compartido (HostGator) seguir los
+siguientes pasos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  Comprimir el proyecto
 
-## Code of Conduct
+Comprimir la carpeta del proyecto en un archivo .zip.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ejemplo: codigos-oxford.zip
 
-## Security Vulnerabilities
+2.  Subir el proyecto
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3.  Ingresar al cPanel del hosting.
 
-## License
+4.  Ir al Administrador de Archivos.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5.  Entrar a la carpeta: public_html
+
+6.  Subir el archivo: codigos-oxford.zip
+
+7.  Descomprimir el archivo.
+
+La estructura final debería quedar así:
+
+public_html/ codigos-oxford/ ...
+
+------------------------------------------------------------------------
+
+### MOVER LOS ARCHIVOS PÚBLICOS
+
+Entrar a la carpeta: codigos-oxford/public
+
+Copiar todos los archivos y carpetas dentro de “public” hacia:
+
+public_html/
+
+Ejemplo:
+
+public_html/ index.php css/ js/ images/
+
+------------------------------------------------------------------------
+
+### MODIFICAR EL ARCHIVO INDEX.PHP
+
+Abrir el archivo: public_html/index.php
+
+Modificar las rutas para que apunten a la carpeta del proyecto.
+
+Ejemplo:
+
+require DIR.’/codigos-oxford/vendor/autoload.php’;
+
+$app = require_once DIR.’/codigos-oxford/bootstrap/app.php’;
+
+------------------------------------------------------------------------
+
+### CONFIGURACIÓN DEL ARCHIVO .ENV
+
+IMPORTANTE:
+
+Antes de subir una nueva versión del proyecto:
+
+1.  Copiar el archivo .env actual del servidor.
+2.  Guardarlo como respaldo.
+
+Esto es importante porque el archivo .env contiene las variables de
+producción, como:
+
+-   Conexión a base de datos
+-   Credenciales
+-   Configuración del entorno
+
+Luego de subir la nueva versión, restaurar el .env correspondiente.
+
+------------------------------------------------------------------------
+
+### RECOMENDACIONES
+
+No subir el archivo .env al repositorio.
+
+Verificar los permisos de las carpetas:
+
+storage bootstrap/cache
+
+------------------------------------------------------------------------
+
