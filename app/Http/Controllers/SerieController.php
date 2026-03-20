@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Level;
 use App\Models\Product;
 use App\Models\Serie;
+use Illuminate\Http\Request;
 
 class SerieController extends Controller
 {
@@ -22,33 +24,42 @@ class SerieController extends Controller
         return redirect()->route("series.show", ["category" => $category, "serie" => $serie]);
     }
 
-    public function show(Category $category, Serie $serie)
+    public function show(Category $category, Serie $serie, Request $request)
     {
-        // get series
-        $series = $category->series->toQuery()->orderBy('name', 'ASC')->get();
+        $level_selected_id = $request->query('level');
 
-        // get series levels
+        $series = $category->series()
+            ->where('state_id', 1)
+            ->orderBy('name', 'ASC')
+            ->get();
+
         $levels = $serie->levels;
 
-        // get products for the current serie
-        $product_groups = array();
+        $level_selected = null;
 
-        $i = 0;
-        foreach ($levels as $level) {
-            $product_groups[$i] = array();
-
-            $product_groups[$i]["level"] = $level;
-
-            $product_groups[$i]["products"] = Product::where("products.level_id", $level->id)
-                ->where("products.state_id", 1)
-                ->orderBy("products.name", "ASC")
-                ->get();
-
-            $i++;
+        if ($levels->isNotEmpty()) {
+            $level_selected = $levels->firstWhere('id', $level_selected_id) 
+                ?? $levels->first();
         }
 
-        //dd($product_groups);
+        // productos por nivel
+        $products_levels = $levels->map(function ($level) {
+            return [
+                'level' => $level,
+                'products' => Product::where('level_id', $level->id)
+                    ->where('state_id', 1)
+                    ->orderBy('name', 'ASC')
+                    ->get()
+            ];
+        });
 
-        return view("series", ["current_category" => $category, "current_serie" => $serie, "series" => $series, "levels" => $levels, "product_groups" => $product_groups]);
+        return view('series', [
+            'current_category' => $category,
+            'current_serie' => $serie,
+            'series' => $series,
+            'levels' => $levels,
+            'products_levels' => $products_levels,
+            'level_selected' => $level_selected
+        ]);
     }
 }

@@ -12,14 +12,13 @@ class Product extends Model
     protected $fillable = [
         "name",
         "description",
-        "product_component_list",
-        "image",
+        "component_list",
+        "oup_image_url",
         "isbn",
         "isbn2",
         "edition",
         "format",
-        "licence_length",
-        "price_usd",
+        "license_length",
         "price_usd",
         "level_id",
     ];
