@@ -11,7 +11,10 @@ class HomeController extends Controller
     public function index()
     {
         // get series
-        $series = Serie::inRandomOrder()->limit(20)->get();
+        $series = Serie::where('state_id', 1)
+                    ->inRandomOrder()
+                    ->limit(20)
+                    ->get();
 
         // get products from 5 diferent series
         $id_series_selected = [109, 99, 114, 64, 132, 44, 105, 159];

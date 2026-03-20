@@ -12,6 +12,10 @@ class ProductController extends Controller
 {
     public function index(Product $product)
     {
+        if ($product->state_id != 1) {
+            return redirect('/');
+        }
+        
         $level = $product->level;
         $serie = $product->serie;
         $category = $product->category;

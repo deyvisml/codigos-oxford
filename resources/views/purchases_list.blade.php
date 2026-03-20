@@ -6,68 +6,68 @@
 
 @section('content')
     <div class="bg-neutral-100 pb-10">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="py-8 mb-20  min-h-screen">
+        <div class="mx-auto px-4 max-w-7xl">
+            <div class="mb-20 py-8">
 
-                <h2 class="text-2xl font-semibold border-b-2 pb-3">
+                <h2 class="pb-3 border-b-2 font-semibold text-2xl">
                     Compras
                 </h2>
 
                 @if (count($orders) > 0)
-                    <p class="p-2 border rounded border-neutral-300 bg-blue-100 text-blue-800 mt-5">
+                    <p class="bg-blue-100 mt-5 p-2 border border-neutral-300 rounded text-blue-800">
                         <span class="font-semibold">Nota 1:</span> Si el estado del pedido ya marca como "ENTREGADO", verifica tu bandeja de entrada y la carpeta de <b>SPAM</b>, en otro caso espere a que el pedido sea procesado por el administrador.
                     </p>
 
-                    <p class="p-2 border rounded border-neutral-300 bg-blue-100 text-blue-800 mt-5">
-                        <span class="font-semibold">Nota 2:</span> Si eres de Perú recuerda que puedes realizar tus proximas compras por Whatsapp al <a href="https://wa.me/51938544411" target="_blank" class="underline text-sky-800">+51 938 544 411</a>
+                    <p class="bg-blue-100 mt-5 p-2 border border-neutral-300 rounded text-blue-800">
+                        <span class="font-semibold">Nota 2:</span> Si eres de Perú recuerda que puedes realizar tus proximas compras por Whatsapp al <a href="https://wa.me/51938544411" target="_blank" class="text-sky-800 underline">+51 938 544 411</a>
                     </p>
                 @endif
     
                 <ul class="mt-5">
                     @if (count($orders) > 0)
                         @foreach ($orders as $order)
-                            <li class="bg-white rounded border shadow mb-4">
-                                <div class="p-3 py-4 font-bold border-b-2 text-xs">
+                            <li class="bg-white shadow mb-4 border rounded">
+                                <div class="p-3 py-4 border-b-2 font-bold text-xs">
                                     {{ \Carbon\Carbon::parse($order['data']->created_at)->format('j \d\e F \d\e Y') }}
     
                                 </div>
-                                <div class="flex p-3 py-4 w-full sm:flex-nowrap flex-wrap">
+                                <div class="flex flex-wrap sm:flex-nowrap p-3 py-4 w-full">
                                     <div
-                                        class="sm:w-28 h-28 p-2 sm:mb-0 mb-2 me-4 flex justify-center items-center border self-center w-full">
-                                        <img src="{{ $order['product']->image }}" alt="imagen producto" title="{{$order['product']->name}}"
-                                            class="object-contain h-full max-w-[70px]">
+                                        class="flex justify-center items-center self-center me-4 mb-2 sm:mb-0 p-2 border w-full sm:w-28 h-28">
+                                        <img src="{{ $order['product']->oup_image_url }}" alt="imagen producto" title="{{$order['product']->name}}"
+                                            class="max-w-[70px] h-full object-contain">
                                     </div>
-                                    <div class="text-sm md:w-3/4 w-full">
+                                    <div class="w-full md:w-3/4 text-sm">
                                         <p class="pb-1 text-neutral-600">#{{ $order['data']->id }}</p>
-                                        <p class="pb-1 flex items-end gap-x-2">Estado:
+                                        <p class="flex items-end gap-x-2 pb-1">Estado:
                                             @if ($order['data']->payment_issue)
-                                                <span class="bg-red-600 rounded p-0.5 px-1 text-xs text-white font-semibold">
+                                                <span class="bg-red-600 p-0.5 px-1 rounded font-semibold text-white text-xs">
                                                     Pago rechazado
                                                 </span>
                                             @elseif ($order['data']->email_sent)
-                                                <span class="bg-green-600 rounded p-0.5 px-1 text-xs text-white font-semibold">
+                                                <span class="bg-green-600 p-0.5 px-1 rounded font-semibold text-white text-xs">
                                                     Entregado
                                                 </span>
                                             @else
-                                                <span class="bg-blue-600 rounded p-0.5 px-1 text-xs text-white font-semibold">
+                                                <span class="bg-blue-600 p-0.5 px-1 rounded font-semibold text-white text-xs">
                                                     Pendiente
                                                 </span>
                                             @endif
                                         </p>
-                                        <ul class="flex justify-between items-start sm:flex-nowrap flex-wrap">
-                                            <li class="sm:w-3/5 w-full mb-2">
-                                                <p class="font-bold py-1">Elemento</p>
+                                        <ul class="flex flex-wrap sm:flex-nowrap justify-between items-start">
+                                            <li class="mb-2 w-full sm:w-3/5">
+                                                <p class="py-1 font-bold">Elemento</p>
                                                 <a href="{{ route('products.index', ['product' => $order['product']]) }}" title="{{$order['product']->name}}"
-                                                    class="underline cursor-pointer text-sky-800">
+                                                    class="text-sky-800 underline cursor-pointer">
                                                     {{ $order['product']->name }}
                                                 </a>
                                             </li>
-                                            <li class="sm:text-right text-left sm:w-1/5 w-full mb-2">
-                                                <p class="font-bold py-1">Cantidad</p>
+                                            <li class="mb-2 w-full sm:w-1/5 text-left sm:text-right">
+                                                <p class="py-1 font-bold">Cantidad</p>
                                                 <p>{{ $order['data']->quantity }}</p>
                                             </li>
-                                            <li class="sm:text-right text-left sm:w-1/5 w-full mb-2">
-                                                <p class="font-bold py-1">Total</p>
+                                            <li class="mb-2 w-full sm:w-1/5 text-left sm:text-right">
+                                                <p class="py-1 font-bold">Total</p>
                                                 <p>{{ $order['data']->user_paid }} usd</p>
                                             </li>
                                     </div>
