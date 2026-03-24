@@ -135,7 +135,12 @@
                             <p class="bg-gray-100 p-3 w-1/3 font-bold text-sm">ISBN</p>
                             <h2 class="bg-gray-50 p-3 w-2/3 text-sm">{{ $product->isbn }}</h2>
                         </li>
-    
+                        <li class="flex border-gray-300 border-b">
+                            <p class="bg-gray-200 p-3 w-1/3 font-bold text-sm">Descripción</p>
+                            <div class="bg-gray-50 p-3 w-2/3 text-sm">
+                                {!! $product->description !!}
+                            </div>
+                        </li>
                     </ul>
                 </div>
     
@@ -170,7 +175,7 @@
                         <img src="{{ asset('images/payment-methods.png') }}" alt="imagen formas de pago" title="formas de pago" class="max-h-full object-contain">
                     </div>
     
-                    <a class="block mt-5 py-2 w-full text-sm" href="https://api.whatsapp.com/send?phone=51938544411&amp;text=Hola, tengo algunas consultas sobre el producto: {{ url()->full() }}" target="_blank" title="consultas del producto">
+                    <a class="block mt-5 py-2 w-full text-sm" href="https://api.whatsapp.com/send?phone=51938544411&amp;text=Hola, tengo algunas consultas sobre el producto: {{ urlencode(url()->full()) }}" target="_blank" title="consultas del producto">
                             Consultas sobre el producto? <span class="font-semibold text-green-600">Click aquí <i class="text-lg fa-brands fa-whatsapp"></i></span>
                     </a>
 
