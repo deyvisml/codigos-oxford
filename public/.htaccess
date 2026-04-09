@@ -18,4 +18,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Do not allow "www" in the urls, having both "www" and non-"www" cause many errors, eg. in login, and using session store
+    RewriteCond %{HTTP_HOST} ^www\.codigosoxford\.com$ [NC]
+    RewriteRule ^(.*)$ https://codigosoxford.com/$1 [L,R=301]
 </IfModule>

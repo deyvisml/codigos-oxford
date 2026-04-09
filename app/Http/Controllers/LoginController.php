@@ -23,16 +23,16 @@ class LoginController extends Controller
 
     public function store()
     {
-        $google_user = Socialite::driver('google')->user();
-        // before an error occure here because in console.cloud.google.com only https://codigosoxford.com/* was added and now also is added: https://www.codigosoxford.com/*
-        /*
+        // before an error occure here because in https://console.cloud.google.com/ only https://codigosoxford.com/* was added and now also is added: https://www.codigosoxford.com/*
+        // Update: Now the www url is not used, only the non-www url is used, so the error is not occuring anymore, but the code to catch the error is still here just in case
+        
         try
         {
             $google_user = Socialite::driver('google')->user();
         }
         catch (InvalidStateException $e){
             $google_user = Socialite::driver('google')->stateless()->user();
-        }*/
+        }
 
         $user_data = $google_user->user;
 
